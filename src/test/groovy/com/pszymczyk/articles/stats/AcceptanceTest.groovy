@@ -27,7 +27,7 @@ class AcceptanceTest extends Specification {
     @Autowired
     TestRestTemplate restTemplate
 
-    def "Should count top five articles ranking in last five days"() {
+    def "Should count top three articles ranking in last three days"() {
         given:
             def today = Instant.parse("2007-12-15T10:15:30.00Z").toEpochMilli()
             def yesterday = Instant.parse("2007-12-14T10:15:30.00Z").toEpochMilli()
