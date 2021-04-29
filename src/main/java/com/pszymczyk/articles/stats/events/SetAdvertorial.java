@@ -1,10 +1,10 @@
-package com.pszymczyk.articles.stats.commands;
+package com.pszymczyk.articles.stats.events;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-class SetAdvertorial {
+public class SetAdvertorial {
     private final String category;
     private final String header;
     private final String article;
@@ -17,5 +17,17 @@ class SetAdvertorial {
         this.category = category;
         this.header = header;
         this.article = article;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String getArticle() {
+        return article;
     }
 }

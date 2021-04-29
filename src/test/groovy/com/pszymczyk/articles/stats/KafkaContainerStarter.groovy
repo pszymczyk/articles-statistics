@@ -1,5 +1,6 @@
 package com.pszymczyk.articles.stats
 
+import com.pszymczyk.articles.stats.advertorial.global.GlobalTableAdvertorialsAggregator
 import com.pszymczyk.articles.stats.top3.category.Top3ArticlesByCategoryAggregator
 import com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesAggregator
 import groovy.transform.CompileStatic
@@ -34,6 +35,8 @@ class KafkaContainerStarter {
         def newTopics = [
                 GlobalTop3ArticlesAggregator.ARTICLES_VISITS,
                 Top3ArticlesByCategoryAggregator.ARTICLES_VISITS,
+                GlobalTableAdvertorialsAggregator.ADVERTORIALS_GLOBAL_STATE,
+                GlobalTableAdvertorialsAggregator.SET_ADVERTORIAL,
         ].collect { topicName -> new NewTopic(topicName, 1, (short) 1) }
 
         adminClient.createTopics(newTopics)

@@ -4,12 +4,17 @@ import com.pszymczyk.articles.stats.top3.ArticleEventTimeExtractor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
+import org.apache.kafka.streams.state.HostInfo;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.kafka.config.KafkaStreamsConfiguration;
 import org.springframework.kafka.core.CleanupConfig;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,5 +44,17 @@ class KafkaStreamsConfig {
     @Bean
     CleanupConfig cleanupConfig() {
         return new CleanupConfig(false, false);
+    }
+
+    @Bean
+    HostInfo hostInfo(Environment environment) throws UnknownHostException {
+        String host = InetAddress.getLocalHost().getHostAddress();
+        String port = environment.getProperty("local.server.port");
+        return new HostInfo(host, Integer.parseInt(port));
+    }
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

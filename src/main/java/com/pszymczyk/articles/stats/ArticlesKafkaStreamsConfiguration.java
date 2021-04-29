@@ -1,5 +1,9 @@
-package com.pszymczyk.articles.stats.top3;
+package com.pszymczyk.articles.stats;
 
+import com.pszymczyk.articles.stats.advertorial.global.GlobalTableAdvertorialsAggregator;
+import com.pszymczyk.articles.stats.advertorial.global.GlobalTableAdvertorialsStreams;
+import com.pszymczyk.articles.stats.advertorial.interactivequeries.AdvertorialsAggregator;
+import com.pszymczyk.articles.stats.advertorial.interactivequeries.AdvertorialsStreams;
 import com.pszymczyk.articles.stats.top3.category.Top3ArticlesByCategoryAggregator;
 import com.pszymczyk.articles.stats.top3.category.Top3ArticlesByCategoryStreams;
 import com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesAggregator;
@@ -10,10 +14,40 @@ import org.springframework.kafka.config.KafkaStreamsConfiguration;
 import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.kafka.core.CleanupConfig;
 
+import java.time.Clock;
+
 import static com.pszymczyk.articles.stats.KafkaStreamsConfig.addApplicationIdConfig;
 
 @Configuration
 class ArticlesKafkaStreamsConfiguration {
+
+    @Bean
+    @GlobalTableAdvertorialsStreams
+    StreamsBuilderFactoryBean globalTableAdvertorialsStreams(KafkaStreamsConfiguration kafkaStreamsConfig, CleanupConfig cleanupConfig, Clock clock) {
+
+        GlobalTableAdvertorialsAggregator infrastructureCustomizer = new GlobalTableAdvertorialsAggregator(clock);
+
+        StreamsBuilderFactoryBean namedStreamsBuilderFactoryBean = new StreamsBuilderFactoryBean(
+            addApplicationIdConfig(kafkaStreamsConfig, "global-table-advertorials-aggregator"),
+            cleanupConfig);
+
+        namedStreamsBuilderFactoryBean.setInfrastructureCustomizer(infrastructureCustomizer);
+        return namedStreamsBuilderFactoryBean;
+    }
+
+    @Bean
+    @AdvertorialsStreams
+    StreamsBuilderFactoryBean advertorialsStreams(KafkaStreamsConfiguration kafkaStreamsConfig, CleanupConfig cleanupConfig) {
+
+        AdvertorialsAggregator infrastructureCustomizer = new AdvertorialsAggregator();
+
+        StreamsBuilderFactoryBean namedStreamsBuilderFactoryBean = new StreamsBuilderFactoryBean(
+            addApplicationIdConfig(kafkaStreamsConfig, "advertorials-aggregator"),
+            cleanupConfig);
+
+        namedStreamsBuilderFactoryBean.setInfrastructureCustomizer(infrastructureCustomizer);
+        return namedStreamsBuilderFactoryBean;
+    }
 
     @Bean
     @GlobalTop3ArticlesStreams

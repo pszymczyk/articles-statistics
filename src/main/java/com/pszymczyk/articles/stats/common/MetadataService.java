@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
  * Looks up StreamsMetadata from KafkaStreams and converts the results
  * into Beans that can be JSON serialized via Jersey.
  */
-//@Component
 public class MetadataService {
 
   public static class NotFoundException extends RuntimeException {
