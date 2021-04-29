@@ -1,5 +1,9 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.top3;
 
+import com.pszymczyk.articles.stats.top3.category.Top3ArticlesByCategoryAggregator;
+import com.pszymczyk.articles.stats.top3.category.Top3ArticlesByCategoryStreams;
+import com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesAggregator;
+import com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesStreams;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.KafkaStreamsConfiguration;

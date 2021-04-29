@@ -1,5 +1,8 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.top3.category;
 
+import com.pszymczyk.articles.stats.common.JsonSerdes;
+import com.pszymczyk.articles.stats.events.ArticleVisited;
+import com.pszymczyk.articles.stats.top3.ArticlesRanking;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -12,10 +15,10 @@ import org.springframework.kafka.config.KafkaStreamsInfrastructureCustomizer;
 
 import java.time.Duration;
 
-class Top3ArticlesByCategoryAggregator implements KafkaStreamsInfrastructureCustomizer {
+public class Top3ArticlesByCategoryAggregator implements KafkaStreamsInfrastructureCustomizer {
 
-    static final String ARTICLES_VISITS = "articles-visit";
-    static final String ARTICLES_VISITS_TOP_THREE_WINDOW_STORE = "articles-visit-top-three-by-category-window-store";
+    public static final String ARTICLES_VISITS = "articles-visit";
+    public static final String ARTICLES_VISITS_TOP_THREE_WINDOW_STORE = "articles-visit-top-three-by-category-window-store";
 
     @Override
     public void configureBuilder(StreamsBuilder builder) {

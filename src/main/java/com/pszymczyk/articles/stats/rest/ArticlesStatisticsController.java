@@ -1,6 +1,8 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.rest;
 
 import com.pszymczyk.articles.stats.dto.Top3ArticlesDTO;
+import com.pszymczyk.articles.stats.top3.category.Top3ArticlesByCategoryReadModel;
+import com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesReadModel;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

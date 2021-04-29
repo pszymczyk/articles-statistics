@@ -1,5 +1,6 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.top3;
 
+import com.pszymczyk.articles.stats.events.ArticleVisited;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.streams.processor.TimestampExtractor;
 import org.slf4j.Logger;

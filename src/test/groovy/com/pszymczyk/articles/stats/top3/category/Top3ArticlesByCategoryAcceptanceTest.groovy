@@ -1,6 +1,8 @@
-package com.pszymczyk.articles.stats
+package com.pszymczyk.articles.stats.top3.category
 
 import com.jayway.jsonpath.JsonPath
+import com.pszymczyk.articles.stats.JsonPathConfiguration
+import com.pszymczyk.articles.stats.KafkaContainerStarter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -10,7 +12,7 @@ import spock.lang.Specification
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 
-import static GlobalTop3ArticlesAggregator.ARTICLES_VISITS
+import static com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesAggregator.ARTICLES_VISITS
 import static org.awaitility.Awaitility.await
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

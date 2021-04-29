@@ -1,9 +1,8 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.top3.global;
 
 import com.pszymczyk.articles.stats.dto.Top3ArticlesDTO;
-import org.apache.kafka.streams.KeyValue;
+import com.pszymczyk.articles.stats.top3.ArticlesRanking;
 import org.apache.kafka.streams.StoreQueryParameters;
-import org.apache.kafka.streams.kstream.Windowed;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyWindowStore;
 import org.springframework.kafka.config.StreamsBuilderFactoryBean;
@@ -11,26 +10,28 @@ import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import java.util.function.Consumer;
+
+import static com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE;
+import static com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesAggregator.GLOBAL_RANKING_KEY;
 
 @Component
-class Top3ArticlesByCategoryReadModel {
+public
+class GlobalTop3ArticlesReadModel {
 
     private final StreamsBuilderFactoryBean streamsBuilderFactoryBean;
     private final Clock clock;
 
-    public Top3ArticlesByCategoryReadModel(
-        @Top3ArticlesByCategoryStreams StreamsBuilderFactoryBean streamsBuilderFactoryBean,
-        Clock clock) {
+    public GlobalTop3ArticlesReadModel(@GlobalTop3ArticlesStreams StreamsBuilderFactoryBean streamsBuilderFactoryBean,
+                                       Clock clock) {
         this.streamsBuilderFactoryBean = streamsBuilderFactoryBean;
         this.clock = clock;
     }
 
-    public Top3ArticlesDTO get(String category) {
+    public Top3ArticlesDTO get() {
         ReadOnlyWindowStore<String, ArticlesRanking> store = streamsBuilderFactoryBean.getKafkaStreams().store(
-            StoreQueryParameters.fromNameAndType(Top3ArticlesByCategoryAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE, QueryableStoreTypes.windowStore()));
+            StoreQueryParameters.fromNameAndType(ARTICLES_VISITS_TOP_THREE_WINDOW_STORE, QueryableStoreTypes.windowStore()));
 
-        ArticlesRanking fetch = store.fetch(category, twoDaysBackAtStartOfDay());
+        ArticlesRanking fetch = store.fetch(GLOBAL_RANKING_KEY, twoDaysBackAtStartOfDay());
 
         return fetch != null ? fetch.top3() : Top3ArticlesDTO.empty();
     }

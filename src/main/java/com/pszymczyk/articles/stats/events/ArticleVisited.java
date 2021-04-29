@@ -1,9 +1,9 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.events;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-class ArticleVisited {
+public class ArticleVisited {
 
     private final String articleTitle;
     private final String category;
@@ -19,7 +19,7 @@ class ArticleVisited {
         this.time = time;
     }
 
-    String getArticleTitle() {
+    public String getArticleTitle() {
         return articleTitle;
     }
 
@@ -27,7 +27,7 @@ class ArticleVisited {
         return category;
     }
 
-    Long getTime() {
+    public Long getTime() {
         return time;
     }
 }

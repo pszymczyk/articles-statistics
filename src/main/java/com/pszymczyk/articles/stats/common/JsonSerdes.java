@@ -1,4 +1,4 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.common;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -15,7 +15,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
 
-class JsonSerdes {
+public class JsonSerdes {
 
     final static ObjectMapper objectMapper = new ObjectMapper()
         .registerModule(new Jdk8Module())
@@ -28,7 +28,7 @@ class JsonSerdes {
         .configure(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS, true)
         .configure(MapperFeature.AUTO_DETECT_FIELDS, true);
 
-    static <T> Serde<T> forA(Class<T> aClass) {
+    public static <T> Serde<T> forA(Class<T> aClass) {
         JsonSerializer<T> serializer = new JsonSerializer<>(objectMapper);
         serializer.setAddTypeInfo(false);
         JsonDeserializer<T> deserializer = new JsonDeserializer<>(aClass, objectMapper);

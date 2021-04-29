@@ -1,5 +1,7 @@
 package com.pszymczyk.articles.stats
 
+import com.pszymczyk.articles.stats.top3.category.Top3ArticlesByCategoryAggregator
+import com.pszymczyk.articles.stats.top3.global.GlobalTop3ArticlesAggregator
 import groovy.transform.CompileStatic
 import org.apache.kafka.clients.admin.AdminClient
 import org.apache.kafka.clients.admin.NewTopic

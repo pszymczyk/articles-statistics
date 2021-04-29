@@ -1,16 +1,17 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.top3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pszymczyk.articles.stats.dto.ArticleWithVisitsDTO;
 import com.pszymczyk.articles.stats.dto.Top3ArticlesDTO;
+import com.pszymczyk.articles.stats.events.ArticleVisited;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-class ArticlesRanking {
+public class ArticlesRanking {
 
     private final Map<String, Long> articlesRanking;
 

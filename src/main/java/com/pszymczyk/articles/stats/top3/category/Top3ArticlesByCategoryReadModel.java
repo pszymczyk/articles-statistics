@@ -1,6 +1,7 @@
-package com.pszymczyk.articles.stats;
+package com.pszymczyk.articles.stats.top3.category;
 
 import com.pszymczyk.articles.stats.dto.Top3ArticlesDTO;
+import com.pszymczyk.articles.stats.top3.ArticlesRanking;
 import org.apache.kafka.streams.StoreQueryParameters;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyWindowStore;
@@ -10,26 +11,25 @@ import org.springframework.stereotype.Component;
 import java.time.Clock;
 import java.time.LocalDate;
 
-import static com.pszymczyk.articles.stats.GlobalTop3ArticlesAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE;
-import static com.pszymczyk.articles.stats.GlobalTop3ArticlesAggregator.GLOBAL_RANKING_KEY;
-
 @Component
-class GlobalTop3ArticlesReadModel {
+public
+class Top3ArticlesByCategoryReadModel {
 
     private final StreamsBuilderFactoryBean streamsBuilderFactoryBean;
     private final Clock clock;
 
-    public GlobalTop3ArticlesReadModel(@GlobalTop3ArticlesStreams StreamsBuilderFactoryBean streamsBuilderFactoryBean,
-                                       Clock clock) {
+    public Top3ArticlesByCategoryReadModel(
+        @Top3ArticlesByCategoryStreams StreamsBuilderFactoryBean streamsBuilderFactoryBean,
+        Clock clock) {
         this.streamsBuilderFactoryBean = streamsBuilderFactoryBean;
         this.clock = clock;
     }
 
-    public Top3ArticlesDTO get() {
+    public Top3ArticlesDTO get(String category) {
         ReadOnlyWindowStore<String, ArticlesRanking> store = streamsBuilderFactoryBean.getKafkaStreams().store(
-            StoreQueryParameters.fromNameAndType(ARTICLES_VISITS_TOP_THREE_WINDOW_STORE, QueryableStoreTypes.windowStore()));
+            StoreQueryParameters.fromNameAndType(Top3ArticlesByCategoryAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE, QueryableStoreTypes.windowStore()));
 
-        ArticlesRanking fetch = store.fetch(GLOBAL_RANKING_KEY, twoDaysBackAtStartOfDay());
+        ArticlesRanking fetch = store.fetch(category, twoDaysBackAtStartOfDay());
 
         return fetch != null ? fetch.top3() : Top3ArticlesDTO.empty();
     }

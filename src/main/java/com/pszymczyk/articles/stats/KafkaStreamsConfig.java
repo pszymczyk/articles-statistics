@@ -1,5 +1,6 @@
 package com.pszymczyk.articles.stats;
 
+import com.pszymczyk.articles.stats.top3.ArticleEventTimeExtractor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
@@ -13,9 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+public
 class KafkaStreamsConfig {
 
-    static KafkaStreamsConfiguration addApplicationIdConfig(KafkaStreamsConfiguration kafkaStreamsConfig, String applicationId) {
+    public static KafkaStreamsConfiguration addApplicationIdConfig(KafkaStreamsConfiguration kafkaStreamsConfig, String applicationId) {
         Map<String, Object> newProperties = new HashMap<>();
         kafkaStreamsConfig.asProperties().forEach((s, o) -> newProperties.put((String) s, o));
         newProperties.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
