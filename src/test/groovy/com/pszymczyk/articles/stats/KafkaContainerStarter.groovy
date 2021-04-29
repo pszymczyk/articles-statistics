@@ -30,8 +30,8 @@ class KafkaContainerStarter {
         )
 
         def newTopics = [
-                GlobalTopThreeArticlesAggregator.ARTICLES_VISITS,
-                TopThreeArticlesByCategoryAggregator.ARTICLES_VISITS,
+                GlobalTop3ArticlesAggregator.ARTICLES_VISITS,
+                Top3ArticlesByCategoryAggregator.ARTICLES_VISITS,
         ].collect { topicName -> new NewTopic(topicName, 1, (short) 1) }
 
         adminClient.createTopics(newTopics)

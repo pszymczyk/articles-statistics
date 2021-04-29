@@ -10,7 +10,7 @@ import spock.lang.Specification
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 
-import static GlobalTopThreeArticlesAggregator.ARTICLES_VISITS
+import static GlobalTop3ArticlesAggregator.ARTICLES_VISITS
 import static org.awaitility.Awaitility.await
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,12 +39,16 @@ class AcceptanceTest extends Specification {
             def superscriptArticle = "Insurance startup Superscript used this pitch deck to raise 10 million in a funding round backed by Seedcamp"
             def academyAwardsArticle = "The 93rd Academy Awards will honor the best films of the year here's how to watch live this Sunday to see all the winners"
 
+            def businessCategory
+            def newsCategory
+
         when: "simulate day before yesterday clicks"
             2.times {
                 kafkaTemplate.send(ARTICLES_VISITS,
                         """
                         {
                             "articleTitle": "$monzoArticle",
+                            "category": "$businessCategory",
                             "time": $dayBeforeYesterday
                         }
                         """.toString()).get()
@@ -54,6 +58,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$spacexArticle",
+                            "category": "$newsCategory",
                             "time": $dayBeforeYesterday
                         }
                         """.toString()).get()
@@ -63,6 +68,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$cloudKitchensArticle",
+                            "category": "$businessCategory",
                             "time": $dayBeforeYesterday
                         }
                         """.toString()).get()
@@ -72,6 +78,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$academyAwardsArticle",
+                            "category": "$newsCategory",
                             "time": $dayBeforeYesterday
                         }
                         """.toString()).get()
@@ -80,7 +87,8 @@ class AcceptanceTest extends Specification {
                 kafkaTemplate.send(ARTICLES_VISITS,
                         """
                         {
-                            "articleTitle": "$superscriptArticle",
+                            "articleTitle": "$superscriptArticle",  
+                            "category": "$businessCategory",
                             "time": $dayBeforeYesterday
                         }
                         """.toString()).get()
@@ -91,6 +99,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$monzoArticle",
+                            "category": "$businessCategory",
                             "time": $yesterday
                         }
                         """.toString()).get()
@@ -100,6 +109,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$spacexArticle",
+                            "category": "$newsCategory",
                             "time": $yesterday
                         }
                         """.toString()).get()
@@ -109,6 +119,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$cloudKitchensArticle",
+                            "category": "$businessCategory",
                             "time": $yesterday
                         }
                         """.toString()).get()
@@ -118,6 +129,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$academyAwardsArticle",
+                            "category": "$newsCategory",
                             "time": $yesterday
                         }
                         """.toString()).get()
@@ -127,6 +139,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$superscriptArticle",
+                            "category": "$businessCategory",
                             "time": $yesterday
                         }
                         """.toString()).get()
@@ -137,6 +150,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$monzoArticle",
+                            "category": "$businessCategory",
                             "time": $today
                         }
                         """.toString()).get()
@@ -146,6 +160,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$spacexArticle",
+                            "category": "$newsCategory",
                             "time": $today
                         }
                         """.toString()).get()
@@ -155,6 +170,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$cloudKitchensArticle",
+                            "category": "$businessCategory",
                             "time": $today
                         }
                         """.toString()).get()
@@ -164,6 +180,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$academyAwardsArticle",
+                            "category": "$newsCategory",
                             "time": $today
                         }
                         """.toString()).get()
@@ -173,6 +190,7 @@ class AcceptanceTest extends Specification {
                         """
                         {
                             "articleTitle": "$superscriptArticle",
+                            "category": "$businessCategory",
                             "time": $today
                         }
                         """.toString()).get()

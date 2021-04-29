@@ -12,7 +12,7 @@ import org.springframework.kafka.config.KafkaStreamsInfrastructureCustomizer;
 
 import java.time.Duration;
 
-class GlobalTopThreeArticlesAggregator implements KafkaStreamsInfrastructureCustomizer {
+class GlobalTop3ArticlesAggregator implements KafkaStreamsInfrastructureCustomizer {
 
     static final String ARTICLES_VISITS = "articles-visit";
     static final String ARTICLES_VISITS_TOP_THREE_WINDOW_STORE = "articles-visit-top-three-window-store";

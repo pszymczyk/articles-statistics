@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import java.time.Clock;
 import java.time.LocalDate;
 
-import static com.pszymczyk.articles.stats.GlobalTopThreeArticlesAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE;
-import static com.pszymczyk.articles.stats.GlobalTopThreeArticlesAggregator.GLOBAL_RANKING_KEY;
+import static com.pszymczyk.articles.stats.GlobalTop3ArticlesAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE;
+import static com.pszymczyk.articles.stats.GlobalTop3ArticlesAggregator.GLOBAL_RANKING_KEY;
 
 @Component
 class GlobalTop3ArticlesReadModel {

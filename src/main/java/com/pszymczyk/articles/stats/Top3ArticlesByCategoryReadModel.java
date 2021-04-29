@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.Clock;
 import java.time.Instant;
 
-import static com.pszymczyk.articles.stats.TopThreeArticlesByCategoryAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE;
+import static com.pszymczyk.articles.stats.Top3ArticlesByCategoryAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE;
 
 @Component
 class Top3ArticlesByCategoryReadModel {

@@ -15,7 +15,7 @@ class ArticlesKafkaStreamsConfiguration {
     @GlobalTop3ArticlesStreams
     StreamsBuilderFactoryBean top3ArticlesRankingStreams(KafkaStreamsConfiguration kafkaStreamsConfig, CleanupConfig cleanupConfig) {
 
-        GlobalTopThreeArticlesAggregator infrastructureCustomizer = new GlobalTopThreeArticlesAggregator();
+        GlobalTop3ArticlesAggregator infrastructureCustomizer = new GlobalTop3ArticlesAggregator();
 
         StreamsBuilderFactoryBean namedStreamsBuilderFactoryBean = new StreamsBuilderFactoryBean(
             addApplicationIdConfig(kafkaStreamsConfig, "global-top-three-articles"),
@@ -29,13 +29,13 @@ class ArticlesKafkaStreamsConfiguration {
     @Top3ArticlesByCategoryStreams
     StreamsBuilderFactoryBean top3ArticlesByCategoryRankingStreams(KafkaStreamsConfiguration kafkaStreamsConfig, CleanupConfig cleanupConfig) {
 
-        TopThreeArticlesByCategoryAggregator topThreeArticlesByCategoryAggregator =
-            new TopThreeArticlesByCategoryAggregator();
+        Top3ArticlesByCategoryAggregator top3ArticlesByCategoryAggregator =
+            new Top3ArticlesByCategoryAggregator();
 
         StreamsBuilderFactoryBean namedStreamsBuilderFactoryBean = new StreamsBuilderFactoryBean(
             addApplicationIdConfig(kafkaStreamsConfig, "top-three-articles-grouped-by-category"),
             cleanupConfig);
-        namedStreamsBuilderFactoryBean.setInfrastructureCustomizer(topThreeArticlesByCategoryAggregator);
+        namedStreamsBuilderFactoryBean.setInfrastructureCustomizer(top3ArticlesByCategoryAggregator);
         return namedStreamsBuilderFactoryBean;
     }
 }
