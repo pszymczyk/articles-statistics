@@ -1,42 +1,41 @@
 package com.pszymczyk.articles.stats;
 
 import com.pszymczyk.articles.stats.dto.Top3ArticlesDTO;
-import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StoreQueryParameters;
+import org.apache.kafka.streams.kstream.Windowed;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyWindowStore;
 import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
-import java.time.Instant;
-
-import static com.pszymczyk.articles.stats.Top3ArticlesByCategoryAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE;
+import java.time.LocalDate;
+import java.util.function.Consumer;
 
 @Component
 class Top3ArticlesByCategoryReadModel {
 
-    private final KafkaStreams kafkaStreams;
+    private final StreamsBuilderFactoryBean streamsBuilderFactoryBean;
     private final Clock clock;
 
     public Top3ArticlesByCategoryReadModel(
-        @GlobalTop3ArticlesStreams StreamsBuilderFactoryBean streamsBuilderFactoryBean,
+        @Top3ArticlesByCategoryStreams StreamsBuilderFactoryBean streamsBuilderFactoryBean,
         Clock clock) {
-        this.kafkaStreams = streamsBuilderFactoryBean.getKafkaStreams();
+        this.streamsBuilderFactoryBean = streamsBuilderFactoryBean;
         this.clock = clock;
     }
 
     public Top3ArticlesDTO get(String category) {
-        try {
+        ReadOnlyWindowStore<String, ArticlesRanking> store = streamsBuilderFactoryBean.getKafkaStreams().store(
+            StoreQueryParameters.fromNameAndType(Top3ArticlesByCategoryAggregator.ARTICLES_VISITS_TOP_THREE_WINDOW_STORE, QueryableStoreTypes.windowStore()));
 
-            ReadOnlyWindowStore<String, ArticlesRanking> store = kafkaStreams.store(
-                StoreQueryParameters.fromNameAndType(ARTICLES_VISITS_TOP_THREE_WINDOW_STORE, QueryableStoreTypes.windowStore()));
+        ArticlesRanking fetch = store.fetch(category, twoDaysBackAtStartOfDay());
 
+        return fetch != null ? fetch.top3() : Top3ArticlesDTO.empty();
+    }
 
-
-            return store.fetch(category, Instant.now(clock).toEpochMilli()).top3();
-        } catch (Exception e) {
-            return null;
-        }
+    private long twoDaysBackAtStartOfDay() {
+        return LocalDate.now(clock).minusDays(2).atStartOfDay().atZone(clock.getZone()).toInstant().toEpochMilli();
     }
 }

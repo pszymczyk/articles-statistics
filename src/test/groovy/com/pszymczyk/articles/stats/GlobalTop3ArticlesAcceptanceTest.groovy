@@ -14,7 +14,7 @@ import static GlobalTop3ArticlesAggregator.ARTICLES_VISITS
 import static org.awaitility.Awaitility.await
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AcceptanceTest extends Specification {
+class GlobalTop3ArticlesAcceptanceTest extends Specification {
 
     static {
         JsonPathConfiguration.configure()
