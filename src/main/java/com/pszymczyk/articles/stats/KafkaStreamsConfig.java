@@ -1,6 +1,7 @@
 package com.pszymczyk.articles.stats;
 
 import com.pszymczyk.articles.stats.top3.ArticleEventTimeExtractor;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
@@ -43,6 +44,10 @@ class KafkaStreamsConfig {
         return new KafkaStreamsConfiguration(configs);
     }
 
+    /**
+     * Warning!!!
+     * On production environment both settings should be false
+     */
     @Bean
     CleanupConfig cleanupConfig() {
         return new CleanupConfig(true, true);
@@ -66,5 +71,20 @@ class KafkaStreamsConfig {
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    NewTopic setAdvertorial() {
+        return new NewTopic("set-advertorial", 3, (short) 1);
+    }
+
+    @Bean
+    NewTopic advertorialsGlobalState() {
+        return new NewTopic("advertorials-global-state", 3, (short) 1);
+    }
+
+    @Bean
+    NewTopic articlesVisit() {
+        return new NewTopic("articles-visit", 1, (short) 1);
     }
 }
