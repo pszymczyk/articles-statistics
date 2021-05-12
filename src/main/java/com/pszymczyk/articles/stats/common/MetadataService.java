@@ -16,11 +16,9 @@
 package com.pszymczyk.articles.stats.common;
 
 import org.apache.kafka.common.serialization.Serializer;
-import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyQueryMetadata;
 import org.apache.kafka.streams.state.StreamsMetadata;
 import org.springframework.kafka.config.StreamsBuilderFactoryBean;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;

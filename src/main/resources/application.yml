@@ -1,9 +1,12 @@
-kafka:
-  streams:
-      local:
-        host: localhost
-        port: 8080
-
 logging:
   level:
     org.apache.kafka.streams.processor.internals: "warn"
+
+server:
+  port: 8080
+
+#spring:
+#  kafka:
+#    streams:
+#      state-dir: /Users/pawel/repo/bc/articles-statistics/target/state8080
+#      state-dir: /Users/pawel/repo/bc/articles-statistics/target/state8081

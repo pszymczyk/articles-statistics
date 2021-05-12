@@ -16,7 +16,7 @@ public class ArticleEventTimeExtractor implements TimestampExtractor {
         if (value instanceof ArticleVisited) {
             return timestampFromChargingEvent(record, (ArticleVisited) value);
         } else {
-            throw new IllegalArgumentException("ArticleEventTimeExtractor can only handle ArticleVisited events");
+            return record.timestamp();
         }
     }
 

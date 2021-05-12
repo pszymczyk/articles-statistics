@@ -2,7 +2,6 @@ package com.pszymczyk.articles.stats.advertorial.interactivequeries;
 
 import com.pszymczyk.articles.stats.advertorial.PresentAdvertorial;
 import com.pszymczyk.articles.stats.advertorial.PresentAdvertorialsReadModel;
-import com.pszymczyk.articles.stats.advertorial.global.GlobalTableAdvertorialsAggregator;
 import com.pszymczyk.articles.stats.common.HostStoreInfo;
 import com.pszymczyk.articles.stats.common.MetadataService;
 import org.apache.kafka.common.serialization.Serdes;
@@ -47,7 +46,7 @@ public class AdvertorialsReadModel implements PresentAdvertorialsReadModel {
 
         // category is on this instance
         ReadOnlyKeyValueStore<String, PresentAdvertorial> store = streamsBuilderFactoryBean.getKafkaStreams().store(
-            StoreQueryParameters.fromNameAndType(GlobalTableAdvertorialsAggregator.ADVERTORIALS_GLOBAL_TABLE, QueryableStoreTypes.keyValueStore()));
+            StoreQueryParameters.fromNameAndType(AdvertorialsAggregator.ADVERTORIALS_LOCAL_TABLE, QueryableStoreTypes.keyValueStore()));
 
         return store.get(category);
     }
