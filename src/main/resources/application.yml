@@ -1,0 +1,9 @@
+kafka:
+  streams:
+      local:
+        host: localhost
+        port: 8080
+
+logging:
+  level:
+    org.apache.kafka.streams.processor.internals: "warn"

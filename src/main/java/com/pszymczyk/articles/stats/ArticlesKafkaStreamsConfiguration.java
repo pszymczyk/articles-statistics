@@ -37,9 +37,9 @@ class ArticlesKafkaStreamsConfiguration {
 
     @Bean
     @AdvertorialsStreams
-    StreamsBuilderFactoryBean advertorialsStreams(KafkaStreamsConfiguration kafkaStreamsConfig, CleanupConfig cleanupConfig) {
+    StreamsBuilderFactoryBean advertorialsStreams(KafkaStreamsConfiguration kafkaStreamsConfig, CleanupConfig cleanupConfig, Clock clock) {
 
-        AdvertorialsAggregator infrastructureCustomizer = new AdvertorialsAggregator();
+        AdvertorialsAggregator infrastructureCustomizer = new AdvertorialsAggregator(clock);
 
         StreamsBuilderFactoryBean namedStreamsBuilderFactoryBean = new StreamsBuilderFactoryBean(
             addApplicationIdConfig(kafkaStreamsConfig, "advertorials-aggregator"),
