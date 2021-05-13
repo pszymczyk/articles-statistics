@@ -34,6 +34,7 @@ class KafkaStreamsConfig {
     @Bean
     KafkaStreamsConfiguration defaultKafkaStreamsConfig(KafkaProperties kafkaProperties, HostInfo hostInfo) {
         HashMap<String, Object> configs = new HashMap<>(kafkaProperties.buildStreamsProperties());
+        configs.put(StreamsConfig.APPLICATION_ID_CONFIG, "articles-statistics-v1");
         configs.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
         configs.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         configs.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
